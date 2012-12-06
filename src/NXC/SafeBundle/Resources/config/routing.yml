@@ -1,0 +1,9 @@
+_welcome:
+    pattern:  /
+    defaults: { _controller: NXCSafeBundle:Default:secured }
+_secured:
+    resource: "@NXCSafeBundle/Controller/SecuredController.php"
+    type:     annotation
+nxc_safe_homepage:
+    pattern:  /secured
+    defaults: { _controller: NXCSafeBundle:Default:secured }

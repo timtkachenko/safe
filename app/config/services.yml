@@ -1,0 +1,2 @@
+imports:
+    - { resource: "@NXCSafeBundle/Resources/config/services.yml" }

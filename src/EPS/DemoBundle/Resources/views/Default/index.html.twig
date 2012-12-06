@@ -1,0 +1,17 @@
+{% extends 'NXCSafeBundle::layout.html.twig' %}
+
+
+
+{% block content %}
+<h1>Grid</h1>
+
+{{jqgrid(gridView)}}
+
+
+<br/>
+<a href="{{path('multiviewgrid')}}">Multi grid</a>
+<br/>
+<a href="{{path('gene')}}">Generate dummy data</a>
+
+
+{% endblock content %}

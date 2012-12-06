@@ -1,0 +1,18 @@
+parameters:
+#    nxc_safe.example.class: NXC\SafeBundle\Example
+
+services:
+  nxc.safe.admin.whisper:
+    class: NXC\SafeBundle\Admin\WhisperAdmin
+    tags:
+      - { name: sonata.admin, manager_type: orm, group: safe, label: whisper }
+    arguments: [null, NXC\SafeBundle\Entity\Whisper, SonataAdminBundle:CRUD]
+#    nxc_safe.example:
+#        class: %nxc_safe.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+#
+#    tt.safe.admin.whisper:
+#          class: NXC\SafeBundle\Admin\WhisperAdmin
+#          tags:
+#            - { name: sonata.admin, manager_type: orm, group: safe, label: safe }
+#          arguments: [null, NXC\SafeBundle\Admin\Entity\Whisper, SonataAdminBundle:CRUD]
