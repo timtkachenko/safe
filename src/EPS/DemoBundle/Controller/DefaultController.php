@@ -5,7 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
-use Application\Sonata\UserBundle\Entity\User;
+use NXC\SafeBundle\Entity\User;
 use NXC\SafeBundle\Entity\Whisper;
 
 class DefaultController extends Controller
@@ -19,8 +19,8 @@ class DefaultController extends Controller
     {
 
         $em = $this->getDoctrine()->getEntityManager();
-        $qb = $em->createQueryBuilder()->from('ApplicationSonataUserBundle:User', 'p')->leftJoin('p.whisper', 'c')
-                 ->select('p.name, p.id, p.datepost, p.title, count(c.id) as nbcomments')->groupBy('p.id');
+        $qb = $em->createQueryBuilder()->from('NXCSafeBundle:Whisper', 'p')->leftJoin('p.user', 'c')
+                 ->select('p.id, p.whisper, p.created, c.username')->groupBy('p.id');
 //        $qb = $em->createQueryBuilder()->from('EPSDemoBundle:Post', 'p')->leftJoin('p.author', 'a')->leftJoin('p.comments', 'c')
 //                 ->select('a.name, p.id, p.datepost, p.title, count(c.id) as nbcomments')->groupBy('p.id');
 //
@@ -48,9 +48,9 @@ class DefaultController extends Controller
         $grid->addColumn('Action', array('twig' => 'EPSDemoBundle:Default:_testgridaction.html.twig', 'name' => 'action', 'resize' => false, 'sortable' => false, 'search' => false, 'width' => '50'));
         $grid->addColumn('ID', array('name' => 'id', 'index' => 'p.id', 'hidden' => true, 'sortable' => false, 'search' => false));
 //        $grid->addColumn('Author', array('name' => 'name', 'index' => 'a.name', 'width' => '150', 'stype' => 'select', 'searchoptions' => array('value' => $lstauthor)));
-        $grid->addColumn('Post', array('name' => 'title', 'index' => 'p.title', 'autocomplete' => 'ajax_title', 'width' => '150'));
-        $grid->addColumn('Date post', array('name' => 'datepost', 'index' => 'p.datepost', 'formatter' => 'date', 'datepicker' => true));
-        $grid->addColumn('Nb comments', array('name' => 'nbcomments', 'index' => 'nbcomments', 'search' => true, 'having' => 'count(c.id)'));
+        $grid->addColumn('whisper', array('name' => 'whisper', 'index' => 'p.whisper', 'autocomplete' => 'ajax_whisper', 'width' => '150'));
+        $grid->addColumn('Date created', array('name' => 'created', 'index' => 'p.created', 'formatter' => 'date', 'datepicker' => true));
+        $grid->addColumn('username', array('name' => 'username', 'index' => 'username', 'search' => true));
 
         return $grid->render();
     }

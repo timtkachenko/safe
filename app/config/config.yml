@@ -50,13 +50,13 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        #auto_mapping: true
-        entity_managers:
-            default:
-                mappings:
-                    ApplicationSonataUserBundle: ~
-                    SonataUserBundle: ~
-                    NXCSafeBundle: ~
+        auto_mapping: true
+#        entity_managers:
+#            default:
+#                mappings:
+#                    ApplicationSonataUserBundle: ~
+#                    SonataUserBundle: ~
+#                    NXCSafeBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -69,10 +69,10 @@ swiftmailer:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    #user_class: NXC\UserBundle\Entity\User
-    user_class:     Application\Sonata\UserBundle\Entity\User
-    group:
-        group_class: Application\Sonata\UserBundle\Entity\Group
+    user_class: NXC\SafeBundle\Entity\User
+#    user_class:     Application\Sonata\UserBundle\Entity\User
+#    group:
+#        group_class: Application\Sonata\UserBundle\Entity\Group
 sonata_cache:
     caches:
         esi:

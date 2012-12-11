@@ -19,7 +19,7 @@ class Whisper
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="whispers")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="whispers")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -73,9 +73,9 @@ class Whisper
     /**
      * Set user
      *
-     * @param Application\Sonata\UserBundle\Entity\User $user
+     * @param User $user
      */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
     }
@@ -83,7 +83,7 @@ class Whisper
     /**
      * Get user
      *
-     * @return Application\Sonata\UserBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
