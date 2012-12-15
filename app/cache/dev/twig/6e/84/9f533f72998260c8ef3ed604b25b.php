@@ -28,7 +28,7 @@ class __TwigTemplate_6e849f533f72998260c8ef3ed604b25b extends Twig_Template
     public function block_content($context, array $blocks = array())
     {
         // line 6
-        echo "<h1>Grid</h1>
+        echo "<h1>Messages</h1>
 
 ";
         // line 8

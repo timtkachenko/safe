@@ -487,6 +487,11 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'EPS\\DemoBundle\\Controller\\DefaultController::indexAction',  '_route' => 'viewgrid',);
         }
 
+        // grid_edit
+        if ($pathinfo === '/viewgrid/edit') {
+            return array (  '_controller' => 'EPS\\DemoBundle\\Controller\\DefaultController::createAction',  '_route' => 'grid_edit',);
+        }
+
         // multiviewgrid
         if ($pathinfo === '/multi') {
             return array (  '_controller' => 'EPS\\DemoBundle\\Controller\\DefaultController::multigridAction',  '_route' => 'multiviewgrid',);
@@ -508,7 +513,7 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
 
         // ajax_title
-        if ($pathinfo === '/ajax_titlte') {
+        if ($pathinfo === '/ajax_title') {
             return array (  '_controller' => 'EPS\\DemoBundle\\Controller\\DefaultController::ajaxTitleAction',  '_route' => 'ajax_title',);
         }
 

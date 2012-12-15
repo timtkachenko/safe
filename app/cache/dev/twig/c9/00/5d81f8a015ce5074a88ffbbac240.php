@@ -222,6 +222,7 @@ var gridOptions = \$.extend(
     {
         // line 86
         echo "<script type=\"text/javascript\">
+jqGridInclude(function(){
 
     (function (\$) {
         'use strict';
@@ -238,7 +239,7 @@ var gridOptions = \$.extend(
             var datePickerConfig = \$.extend(
                 \$.datepicker.regional[
                     '";
-        // line 102
+        // line 103
         if (isset($context["gridView"])) { $_gridView_ = $context["gridView"]; } else { $_gridView_ = null; }
         echo twig_escape_filter($this->env, strtr($this->getAttribute($this->getAttribute($_gridView_, "gridModel"), "culture"), array("_" => "-")), "html", null, true);
         echo "'
@@ -248,7 +249,7 @@ var gridOptions = \$.extend(
                     minDate: new Date(baseYear - 10, 0, 1),
                     maxDate: new Date(baseYear + 10, 11, 31),
                     dateFormat: '";
-        // line 108
+        // line 109
         if (isset($context["gridView"])) { $_gridView_ = $context["gridView"]; } else { $_gridView_ = null; }
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($_gridView_, "gridModel"), "datePickerFormat"), "html", null, true);
         echo "',
@@ -256,7 +257,7 @@ var gridOptions = \$.extend(
                     changeYear: true,
                     changeMonth: true,
                     closeText: '";
-        // line 112
+        // line 113
         echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans("datepicker.close"), "html", null, true);
         echo "',
 
@@ -268,14 +269,12 @@ var gridOptions = \$.extend(
                     }
                 }
             );
-
             // --- Grid Creation ---
             ";
         // line 124
         if (isset($context["gridView"])) { $_gridView_ = $context["gridView"]; } else { $_gridView_ = null; }
         echo $this->env->getExtension('ypt_jq_grid_twig_extension')->renderGridDefinition($_gridView_);
         echo "
-
             \$(window)
                 .resize(function() {
                     var gridWrapperWidth = \$(gridWrapperSelector).width();
@@ -284,6 +283,7 @@ var gridOptions = \$.extend(
                 .trigger('resize');
         });
     }(jQuery));
+});
 
 </script>
 ";
@@ -309,6 +309,6 @@ var gridOptions = \$.extend(
 
     public function getDebugInfo()
     {
-        return array (  300 => 142,  296 => 141,  293 => 140,  275 => 124,  260 => 112,  252 => 108,  242 => 102,  224 => 86,  221 => 85,  213 => 79,  208 => 78,  202 => 77,  199 => 76,  181 => 59,  165 => 47,  156 => 42,  149 => 39,  145 => 37,  141 => 35,  134 => 32,  131 => 31,  127 => 30,  124 => 29,  119 => 28,  109 => 22,  104 => 21,  100 => 19,  96 => 18,  89 => 14,  84 => 13,  79 => 12,  74 => 11,  63 => 4,  58 => 3,  55 => 2,  52 => 1,  46 => 144,  44 => 140,  39 => 137,  37 => 85,  32 => 82,  30 => 76,  25 => 73,  23 => 1,  48 => 14,  43 => 12,  35 => 8,  31 => 6,  28 => 5,);
+        return array (  300 => 142,  296 => 141,  293 => 140,  275 => 124,  261 => 113,  253 => 109,  243 => 103,  224 => 86,  221 => 85,  213 => 79,  208 => 78,  202 => 77,  199 => 76,  181 => 59,  165 => 47,  156 => 42,  149 => 39,  145 => 37,  141 => 35,  134 => 32,  131 => 31,  127 => 30,  124 => 29,  119 => 28,  109 => 22,  104 => 21,  100 => 19,  96 => 18,  89 => 14,  84 => 13,  79 => 12,  74 => 11,  63 => 4,  58 => 3,  55 => 2,  52 => 1,  46 => 144,  44 => 140,  39 => 137,  37 => 85,  32 => 82,  30 => 76,  25 => 73,  23 => 1,);
     }
 }

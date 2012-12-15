@@ -57,7 +57,10 @@ class Whisper
      */
     public function setUpdatedValue()
     {
-       $this->setUpdated(new \DateTime());
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+
+        $this->setApproved(true);
     }
 
     /**

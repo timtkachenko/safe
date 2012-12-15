@@ -163,7 +163,7 @@ class __TwigTemplate_193b2e36517ae77fcdad5d5137b104c4 extends Twig_Template
         echo "            <!-- jQuery code -->
             <link rel=\"stylesheet\" href=\"";
         // line 11
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/sonatajquery/themes/flick/jquery-ui-1.8.16.custom.css"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/sonatajquery/themes/redmond/jquery-ui-1.9.2.custom.css"), "html", null, true);
         echo "\" type=\"text/css\" media=\"all\" />
             <link rel=\"stylesheet\" href=\"";
         // line 12
@@ -178,11 +178,11 @@ class __TwigTemplate_193b2e36517ae77fcdad5d5137b104c4 extends Twig_Template
     {
         // line 17
         echo "            <script src=\"";
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/sonatajquery/jquery-1.8.0.js"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/sonatajquery/jquery-1.8.3.js"), "html", null, true);
         echo "\" type=\"text/javascript\"></script>
             <script src=\"";
         // line 18
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/sonatajquery/jquery-ui-1.8.23.js"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/sonatajquery/jquery-ui-1.9.2.custom.js"), "html", null, true);
         echo "\" type=\"text/javascript\"></script>
             <script src=\"";
         // line 19
@@ -194,7 +194,7 @@ class __TwigTemplate_193b2e36517ae77fcdad5d5137b104c4 extends Twig_Template
         echo "\" type=\"text/javascript\"></script>
             <script src=\"";
         // line 21
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/yptjqgrid/js/jquery.jqGrid.min.js"), "html", null, true);
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/yptjqgrid/js/jquery.jqGrid.js"), "html", null, true);
         echo "\" type=\"text/javascript\"></script>
         ";
     }
@@ -254,6 +254,6 @@ class __TwigTemplate_193b2e36517ae77fcdad5d5137b104c4 extends Twig_Template
 
     public function getDebugInfo()
     {
-        return array (  242 => 67,  239 => 66,  235 => 62,  232 => 61,  225 => 56,  222 => 55,  218 => 63,  216 => 61,  211 => 58,  209 => 55,  206 => 54,  203 => 53,  197 => 21,  193 => 20,  189 => 19,  185 => 18,  180 => 17,  177 => 16,  170 => 12,  166 => 11,  163 => 10,  160 => 9,  154 => 5,  148 => 74,  142 => 72,  139 => 71,  137 => 70,  133 => 68,  131 => 66,  127 => 64,  125 => 53,  122 => 52,  112 => 49,  109 => 48,  104 => 47,  92 => 38,  88 => 37,  83 => 34,  75 => 32,  69 => 29,  65 => 28,  59 => 27,  57 => 26,  52 => 23,  50 => 16,  47 => 15,  45 => 9,  36 => 6,  32 => 5,  26 => 1,  60 => 14,  54 => 12,  46 => 8,  40 => 7,  34 => 4,  31 => 3,  28 => 2,);
+        return array (  242 => 67,  239 => 66,  235 => 62,  232 => 61,  225 => 56,  222 => 55,  218 => 63,  216 => 61,  211 => 58,  209 => 55,  206 => 54,  203 => 53,  197 => 21,  193 => 20,  189 => 19,  185 => 18,  180 => 17,  177 => 16,  170 => 12,  166 => 11,  163 => 10,  160 => 9,  154 => 5,  148 => 74,  142 => 72,  139 => 71,  137 => 70,  133 => 68,  131 => 66,  127 => 64,  125 => 53,  122 => 52,  112 => 49,  109 => 48,  104 => 47,  92 => 38,  88 => 37,  83 => 34,  75 => 32,  69 => 29,  65 => 28,  59 => 27,  57 => 26,  52 => 23,  50 => 16,  47 => 15,  45 => 9,  40 => 7,  36 => 6,  32 => 5,  26 => 1,);
     }
 }

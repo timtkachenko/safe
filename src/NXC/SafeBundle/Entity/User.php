@@ -25,12 +25,17 @@ class User extends BaseUser
         $this->whispers = new ArrayCollection();
     }
     /**
-     * @var integer $id
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
-     * @ORM\OneToMany(targetEntity="Whisper", mappedBy="user")
+     * @ORM\Column(type="string")
+     */
+    protected $slug;
+    /**
+     * ORM\OneToMany(targetEntity="Whisper", mappedBy="user")
      */
     protected $whispers;
 
