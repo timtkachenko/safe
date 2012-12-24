@@ -1,0 +1,78 @@
+{% extends 'NXCSafeBundle::layout.html.twig' %}
+{% block content %}
+<script type="text/javascript">
+var $pem = "-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMYQWDqtLgDKlQvWzacGeBMQpbicd/uoXAvgLNpFZLM7zuYFDhrYncRsl8LIHK0K3f7e1aFmUVgM4LrKU2WFIw0CAwEAAQ==-----END PUBLIC KEY-----";
+var $key = RSA.getPublicKey($pem);
+function assemble() {
+var password_field = document.getElementById("password");
+var data_field = document.getElementById("data");
+data_field.value=sha1(password_field.value) + (new Date().getTime());
+}
+function encrypt() {
+var login_field = document.getElementById("login");
+var data_field = document.getElementById("data");
+login_field.value=RSA.encrypt(data_field.value, $key);
+}
+$(document).ready(function(){
+    $("#send").click(function(){
+        var msg = $("#bla").html();
+        enc=RSA.encrypt(msg, $key);
+        $.post(
+            'secured/login',
+            {encoded:enc},
+            function(re){
+                if(re && window.console){
+                    console.log(re);
+                }
+            },
+            'json'
+        );
+    }).button();
+});
+ $(function() {
+    $("#editgrid").click(function(){
+        var grid = $("#gview_grid");
+        var x = grid.jqGrid("getGridParam",'url');
+        var url = "/safe/web/app_dev.php/usergrid";
+        var editurl = "/safe/web/app_dev.php/usergridedit";
+        jqgrid_reload(grid, {
+            url:url,
+            editurl:editurl,
+            page:1
+        });
+    }).button();
+    $( "#tabs" ).tabs({
+        activate: function( event, ui ) {
+            var grid = (typeof gridSelector != "undefined")?$(gridSelector):$("#grid");
+            var url = "/safe/web/app_dev.php/usergrid";
+            var editurl = "/safe/web/app_dev.php/usergridedit";
+            jqgrid_reload(grid, {
+                url:url,
+                editurl:editurl,
+                page:1
+            });
+            console.log(jqgrid_clear_data(grid))
+        },
+        beforeActivate: function( event, ui ) {
+        },
+        beforeLoad: function( event, ui ) {
+            ui.panel.html(
+                        "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+                        "If this wouldn't be a demo." );
+        }
+    });
+});
+</script>
+<div id="tabs">
+    <ul>
+        <li><a href="#theTab">My DATA</a></li>
+        <li><a href="#theTab">Collaborators</a></li>
+        <li><a href="#theTab">Shared&AMP;Secure</a></li>
+    </ul>
+    <div id="theTab">
+        {{jqgrid(gridView)}}
+    </div>
+</div>
+
+<div id="editgrid">edit</div>
+{% endblock content %}

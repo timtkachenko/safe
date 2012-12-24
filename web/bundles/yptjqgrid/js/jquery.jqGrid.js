@@ -39,7 +39,7 @@ function jqGridInclude(callback)
     }
     setTimeout(function(){
         if(typeof callback =="function")callback();
-    },1333);
+    },3333);
 	function IncludeJavaScript(jsFile)
     {
         var oHead = document.getElementsByTagName('head')[0];

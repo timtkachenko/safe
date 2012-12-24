@@ -1,0 +1,104 @@
+{% extends "NXCSafeBundle::layout.html.twig" %}
+{% block content %}
+<h1>Hello {{ name }}!</h1>
+<script type="text/javascript">
+    var userPublickey = "{{ userPublickey }}";
+    var userAESKey = '{{ userAESKey }}';
+    var salt = "{{ salt }}";
+    var guest = "";
+    //var decryptedPem = CryptoJS.AES.decrypt(encryptedPem, skey);
+    var rsaKey = RSA.getPublicKey(userPublickey);
+$(document).ready(function(){
+    $("#send").click(function(){
+        var msg = $("#bla").val();
+        var password = $("#password").val();
+        //userAESKey = password+salt;
+        console.log(CryptoJS.MD5(userAESKey).toString());
+        password=RSA.encrypt(password, rsaKey);
+        var encrypted = CryptoJS.AES.encrypt(msg, userAESKey);
+        encrypted = encrypted.toString();
+        $.post(
+            'https://symfony2/safe/web/app_dev.php/secured/test',
+            {encrypted:encrypted, password:password},
+            function(re){
+                if(re && window.console){
+                    console.log(re);
+                    var decrypted = CryptoJS.AES.decrypt(re, userAESKey);
+                    console.log(decrypted.toString(CryptoJS.enc.Utf8));
+                }
+            },
+            'json'
+        );
+    }).button();
+
+    $(".getlink").click(function(){
+        var guestname = $(this).attr("id");
+        $.post(
+            'https://symfony2/safe/web/app_dev.php/secured/getlink',
+            {username:guestname},
+            function(re){
+                if(re && window.console){
+                    console.log(re);
+                    guest = re;
+                    $("#password").val(guest);
+                    //var decrypted = CryptoJS.AES.decrypt(re, userAESKey);
+                    //console.log(decrypted.toString(CryptoJS.enc.Utf8));
+                }
+            },
+            'json'
+        );
+    }).button();
+
+    $("#sendGuest").click(function(){
+        var msg = $("#bla").val();
+        var userAESKey = $("#password").val();
+        console.log(CryptoJS.MD5(userAESKey).toString());
+        password=RSA.encrypt(userAESKey, rsaKey);
+        var encrypted = CryptoJS.AES.encrypt(msg, userAESKey);
+        encrypted = encrypted.toString();
+        $.post(
+            'https://symfony2/safe/web/app_dev.php/secured/guestsave',
+            {encrypted:encrypted, password:password},
+            function(re){
+                if(re && window.console){
+                    console.log(re);
+                    var decrypted = CryptoJS.AES.decrypt(re, userAESKey);
+                    console.log(decrypted.toString(CryptoJS.enc.Utf8));
+                }
+            },
+            'json'
+        );
+    }).button();
+
+    $(".getMsg").click(function(){
+        var guestname = $(this).attr("id");
+        var userAESKey = $("#password").val();
+        $.post(
+            'https://symfony2/safe/web/app_dev.php/secured/getmsg',
+            {username:guestname},
+            function(re){
+                if(re && window.console){
+                    console.log(re);
+                    var decrypted = CryptoJS.AES.decrypt(re, userAESKey);
+                    console.log(decrypted.toString(CryptoJS.enc.Utf8));
+                    $("#bla").val(decrypted.toString(CryptoJS.enc.Utf8));
+
+                }
+            },
+            'json'
+        );
+    }).button();
+});
+</script>
+<div class="getlink" id="test">getlink for TEST</div>
+<div class="getlink" id="ateamdev">getlink for ATEAMDEV</div>
+<div id="sendGuest">sendGuest</div>
+<input id="password" type="text" value="yourSecretKey"/>
+<div><textarea id="bla">Студия Ремонта, ООО "Юдистрой"
+Контактное лицо: Гурин Юрий
+Телефон: +380 (48) 790-70-70</textarea></div>
+<div id="send">send</div>
+<div class="getMsg" id="test">readGuest TEST</div>
+<div class="getMsg" id="ateamdev">readGuest ATEAMDEV</div>
+{% endblock %}
+

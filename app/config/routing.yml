@@ -45,9 +45,8 @@ _sonata_admin:
 nxc_safe:
     resource: "@NXCSafeBundle/Resources/config/routing.yml"
     prefix:   /
-
 ####
-EPSDemoBundle:
-    resource: "@EPSDemoBundle/Controller/"
-    type:     annotation
-    prefix:   /
+#EPSDemoBundle:
+#    resource: "@EPSDemoBundle/Controller/"
+#    type:     annotation
+#    prefix:   /

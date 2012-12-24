@@ -13,7 +13,7 @@ html, body
 {
     background-color: #EFEFEF;
 }
-
+html{overflow-y:scroll;}
 body
 {
     font-size:        14px;

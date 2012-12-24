@@ -35,7 +35,7 @@ class AppKernel extends Kernel
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
 
             new Ypt\JqGridBundle\YptJqGridBundle(),
-            new EPS\DemoBundle\EPSDemoBundle(),
+//            new EPS\DemoBundle\EPSDemoBundle(),
 
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
 

@@ -1,9 +1,13 @@
 _welcome:
     pattern:  /
-    defaults: { _controller: NXCSafeBundle:Default:secured }
+    defaults: { _controller: NXCSafeBundle:Default:index }
 _secured:
     resource: "@NXCSafeBundle/Controller/SecuredController.php"
     type:     annotation
 nxc_safe_homepage:
     pattern:  /secured
     defaults: { _controller: NXCSafeBundle:Default:secured }
+_nxc_safe_grid:
+    resource: "@NXCSafeBundle/Controller/GridController.php"
+    type:     annotation
+#    prefix:   /

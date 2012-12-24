@@ -1,5 +1,5 @@
 parameters:
-#    nxc_safe.example.class: NXC\SafeBundle\Example
+    ypt_jq_grid.twig_extension.class: NXC\SafeBundle\Twig\JqGridExtension
 
 services:
   nxc.safe.admin.whisper:
@@ -7,6 +7,10 @@ services:
     tags:
       - { name: sonata.admin, manager_type: orm, group: safe, label: whisper }
     arguments: [null, NXC\SafeBundle\Entity\Whisper, SonataAdminBundle:CRUD]
+  nxc.safe.secured:
+        class: NXC\SafeBundle\Secured\Manager
+        arguments:
+            container: "@service_container"
 #    nxc_safe.example:
 #        class: %nxc_safe.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
@@ -16,3 +20,7 @@ services:
 #          tags:
 #            - { name: sonata.admin, manager_type: orm, group: safe, label: safe }
 #          arguments: [null, NXC\SafeBundle\Admin\Entity\Whisper, SonataAdminBundle:CRUD]
+#  ypt_jq_grid.twig.extension:
+#        class: NXC\SafeBundle\Twig\JqGridExtension
+#        tags:
+#          - { name: twig.extension }
