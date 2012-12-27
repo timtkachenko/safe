@@ -19,7 +19,7 @@ class GridController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $qb = $em->createQueryBuilder()->from('NXCSafeBundle:Whisper', 'p')->leftJoin('p.user', 'c')
-                ->select('p.id, p.whisper, p.created, c.username, c.slug')
+                ->select('p.id, p.whisper, p.created, c.username')
                 ->where("c.id = {$user->getId()}")
                 ->groupBy('p.id');
 //        $qb = $em->createQueryBuilder()->from('EPSDemoBundle:Post', 'p')->leftJoin('p.author', 'a')->leftJoin('p.comments', 'c')
@@ -37,6 +37,7 @@ class GridController extends Controller
         $grid = $gridFactory->createGrid();
         //OPTIONAL
         $grid->setName('grid');
+        $grid->setUrl('');
         $grid->setCaption('list of posts');
         $grid->setGridOptions(array('height' => '333', 'width' => '910',
             "editurl"=>"viewgrid/edit",
@@ -64,12 +65,22 @@ class GridController extends Controller
         $grid->addColumn('Action', array('twig' => 'NXCSafeBundle:Grid:_testgridaction.html.twig', 'name' => 'action', 'resize' => false, 'sortable' => false, 'search' => false, 'width' => '50'));
         $grid->addColumn('ID', array('name' => 'id', 'index' => 'p.id', 'hidden' => true, 'sortable' => false, 'search' => false,'editable'=>true));
 //        $grid->addColumn('Author', array('name' => 'name', 'index' => 'a.name', 'width' => '150', 'stype' => 'select', 'searchoptions' => array('value' => $lstauthor)));
-        $grid->addColumn('whisper', array('name' => 'whisper', 'index' => 'p.whisper', 'autocomplete' => 'ajax_whisper', 'width' => '150','edittype'=>"textarea",'editable'=>true,"editoptions"=>array("size"=>10, "maxlength"=>15)));
+        $grid->addColumn('whisper', array('name' => 'whisper', 'index' => 'p.whisper', 'autocomplete' => 'ajax_whisper', 'width' => '150','formatter'=>'encodeWhisper','unformat'=>'decodeWhisper', 'edittype'=>"textarea",'editable'=>true,"editoptions"=>array("size"=>10, "maxlength"=>15)));
         $grid->addColumn('Date created', array('name' => 'created', 'index' => 'p.created', 'formatter' => 'date', 'datepicker' => true));
-        $grid->addColumn('username', array('name' => 'username', 'index' => 'username', 'search' => true));
-        $grid->addColumn('slug', array('name' => 'slug', 'index' => 'slug', 'search' => true));
+//        $grid->addColumn('username', array('name' => 'username', 'index' => 'username', 'search' => true));
+//        $grid->addColumn('slug', array('name' => 'slug', 'index' => 'slug', 'search' => true));
 
         $data = $grid->render();
+        if(!$grid->isOnlyData()){
+            $manager = $this->container->get('nxc.safe.secured');
+            $manager->getKeys();
+            $pubkey = preg_replace("@\n+@", "", $manager->getPubkey());
+            $data = array_merge($data,
+                    array(
+                "userPublickey"=> $pubkey ,
+                'userAESKey'=>$manager->getSkey(),)
+                );
+        }
         return $data;
     }
     /**

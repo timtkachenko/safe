@@ -23,10 +23,10 @@ var jqgridDefaultEditOptions = {
 	closeOnEscape:true,
 	modal:true,
 	resize:false,
-	beforeShowForm : jqgrid_center_dialog,
+	afterShowForm : jqgrid_center_dialog,
 	afterSubmit: function(response) {
 		var data = JSON.parse(response.responseText);
-		return [data.result,data.val.message,data.id];
+		return [data.result,data.error,data.id?data.id:0];
 	}
 };
 var jqgridDefaultAddOptions = $.extend({}, jqgridDefaultEditOptions, { /*add custom editOptions here*/ });
@@ -34,7 +34,7 @@ var jqgridDefaultDelOptions = {
 	modal: true,
     resize:false,
     closeOnEscape:true,
-	beforeShowForm : jqgrid_center_dialog,
+	afterShowForm : jqgrid_center_dialog,
 	afterSubmit: function(response) {
 		var data = JSON.parse(response.responseText);
 		return [data.result,data.val.message,data.id];

@@ -1,18 +1,12 @@
 {% extends 'NXCSafeBundle::layout.html.twig' %}
 {% block content %}
 <script type="text/javascript">
-var $pem = "-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMYQWDqtLgDKlQvWzacGeBMQpbicd/uoXAvgLNpFZLM7zuYFDhrYncRsl8LIHK0K3f7e1aFmUVgM4LrKU2WFIw0CAwEAAQ==-----END PUBLIC KEY-----";
-var $key = RSA.getPublicKey($pem);
-function assemble() {
-var password_field = document.getElementById("password");
-var data_field = document.getElementById("data");
-data_field.value=sha1(password_field.value) + (new Date().getTime());
-}
-function encrypt() {
-var login_field = document.getElementById("login");
-var data_field = document.getElementById("data");
-login_field.value=RSA.encrypt(data_field.value, $key);
-}
+var userPublickey = "{{ userPublickey }}";
+var userAESKey = '{{ userAESKey }}';
+var salt = "{{ salt }}";
+var guest = "";
+//var decryptedPem = CryptoJS.AES.decrypt(encryptedPem, skey);
+var rsaKey = RSA.getPublicKey(userPublickey);
 $(document).ready(function(){
     $("#send").click(function(){
         var msg = $("#bla").html();
@@ -22,7 +16,7 @@ $(document).ready(function(){
             {encoded:enc},
             function(re){
                 if(re && window.console){
-                    console.log(re);
+                    //console.log(re);
                 }
             },
             'json'
@@ -43,15 +37,26 @@ $(document).ready(function(){
     }).button();
     $( "#tabs" ).tabs({
         activate: function( event, ui ) {
+            var options = $( this ).tabs( "option" );
+
             var grid = (typeof gridSelector != "undefined")?$(gridSelector):$("#grid");
-            var url = "/safe/web/app_dev.php/usergrid";
-            var editurl = "/safe/web/app_dev.php/usergridedit";
+            var url = "/safe/web/app_dev.php/viewgrid";
+            var editurl = "/safe/web/app_dev.php/viewgrid/edit";
+
+            if(options.active === 1){
+                var url = "/safe/web/app_dev.php/usergrid";
+                var editurl = "/safe/web/app_dev.php/usergridedit";
+            }else if(options.active === 2){
+                var url = "/safe/web/app_dev.php/usergrid";
+                var editurl = "/safe/web/app_dev.php/usergridedit";
+            }
             jqgrid_reload(grid, {
                 url:url,
                 editurl:editurl,
                 page:1
             });
-            console.log(jqgrid_clear_data(grid))
+
+            //console.log(jqgrid_clear_data(grid))
         },
         beforeActivate: function( event, ui ) {
         },
@@ -61,6 +66,30 @@ $(document).ready(function(){
                         "If this wouldn't be a demo." );
         }
     });
+});
+function decodeWhisper( cellvalue, options, cell ){
+    var txt = $('span', cell).text()
+    var decrypted = CryptoJS.AES.decrypt(txt, userAESKey);
+        txt = decrypted.toString(CryptoJS.enc.Utf8);
+        //console.log(txt);
+	return txt;
+}
+function encodeWhisper( cellvalue, options, rowObject){
+    	return '<span>'+cellvalue+'</span>';
+}
+jqgridDefaultEditOptions = $.extend({}, jqgridDefaultEditOptions, {
+	beforeSubmit: function(postdata, formid) {
+        var whisper = postdata.grid_whisper;
+        var password = userAESKey;
+        //console.log(CryptoJS.MD5(userAESKey).toString());
+        password=RSA.encrypt(password, rsaKey);
+        var encrypted = CryptoJS.AES.encrypt(whisper, userAESKey);
+        postdata.grid_whisper = encrypted.toString();
+
+        var success = true;
+        var message = false;
+        return[success,message];
+        }
 });
 </script>
 <div id="tabs">

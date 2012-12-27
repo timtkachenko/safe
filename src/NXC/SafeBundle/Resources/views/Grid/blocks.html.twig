@@ -13,8 +13,9 @@ var gridOptions = $.extend(
         colModel:   {{ gridView.getColumnsModels|raw }},
         caption:    '{{ gridView.gridModel.caption }}',
         pager:      gridPagerSelector,
-        loadonce: true,
-        
+        ondblClickRow:function (rowId) {
+				jqgrid_edit_row(this, rowId, jqgridDefaultEditOptions);
+		},
         {# TODO: Apply instanceof comparision, when available on Twig #}
         {% if gridView.gridModel.subGrid %}
             subGrid: true,
@@ -45,7 +46,10 @@ $(gridSelector)
     .jqGrid(gridOptions)
     .navGrid(
         gridPagerSelector,
-        {{ gridView.navigationOptions|raw }}
+        {{ gridView.navigationOptions|raw }},
+        jqgridDefaultEditOptions, // edit options
+        jqgridDefaultAddOptions, // add options
+        jqgridDefaultDelOptions //del options
     )
     .navSeparatorAdd(gridPagerSelector, {
         sepclass: 'ui-separator',

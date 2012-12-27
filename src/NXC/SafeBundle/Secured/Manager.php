@@ -12,13 +12,27 @@ class Manager
     public function __construct($container)
     {
         $this->container = $container;
-        // ... deal with any more arguments etc here
-    }
-    public function init() {
         $user = $this->container->get('security.context')->getToken()->getUser();
         $this->salt = $user->getSalt();
+        $this->getKeys();
     }
-    public function guestSaveAction() {
+    public function getSkey() {
+        return $this->skey;
+    }
+
+    public function getPubkey() {
+        return $this->pubkey;
+    }
+
+    public function getPrivkey() {
+        return $this->privkey;
+    }
+
+    public function getSalt() {
+        return $this->salt;
+    }
+
+        public function guestSaveAction() {
         $error = $em = null;
         $request = $this->getRequest();
         $isVaild = true;
