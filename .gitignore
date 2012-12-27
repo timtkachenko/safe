@@ -1,3 +1,4 @@
 /app/cache
 /vendor
 composer.phar
+!/vendor/yuriteixeira/*
