@@ -42,7 +42,30 @@ class Message
      */
     private $modefied;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="messages")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+    /**
+     * Set user
+     *
+     * @param User $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    }
 
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
     /**
      * Get id
      *

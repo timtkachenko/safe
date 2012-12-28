@@ -23,6 +23,7 @@ class User extends BaseUser
     public function __construct() {
         parent::__construct();
         $this->whispers = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
     /**
      * @ORM\Id
@@ -35,10 +36,13 @@ class User extends BaseUser
      */
     protected $slug;
     /**
-     * ORM\OneToMany(targetEntity="Whisper", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Whisper", mappedBy="user")
      */
     protected $whispers;
-
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="user")
+     */
+    protected $messages;
     /**
      * Get id
      *
@@ -52,7 +56,7 @@ class User extends BaseUser
         return $this->whispers;
     }
 
-    public function setWhispers(\NXC\SafeBundle\Entity\Whisper $whisper) {
+    public function setWhispers(Whisper $whisper) {
         $this->whispers[] = $whisper;
     }
 

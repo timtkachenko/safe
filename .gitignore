@@ -3,6 +3,7 @@ composer.phar
 app/bootstrap*
 
 # Symfony directories
+!vendor/
 vendor/*
 */logs/*
 */cache/*
@@ -13,3 +14,4 @@ web/bundles/*
 app/config/parameters.ini
 app/config/parameters.yml
 !vendor/yuriteixeira
+!vendor/yuriteixeira/jqgrid-bundle/Ypt/JqGridBundle

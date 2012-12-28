@@ -17,16 +17,11 @@ class User extends BaseUser
 {
     public function __construct() {
         parent::__construct();
-//        $this->whispers = new ArrayCollection();
     }
     /**
      * @var integer $id
      */
     protected $id;
-
-//    /**
-//     */
-//    protected $whispers;
 
     /**
      * Get id
@@ -37,13 +32,5 @@ class User extends BaseUser
     {
         return $this->id;
     }
-//    public function getWhispers() {
-//        return $this->whispers;
-//    }
-//
-//    public function setWhispers(\NXC\SafeBundle\Entity\Whisper $whisper) {
-//        $this->whispers[] = $whisper;
-//    }
-
 
 }
