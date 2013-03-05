@@ -24,6 +24,9 @@ class User extends BaseUser
         parent::__construct();
         $this->whispers = new ArrayCollection();
         $this->messages = new ArrayCollection();
+
+        $this->friendsWithMe = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->handshakes = new \Doctrine\Common\Collections\ArrayCollection();
     }
     /**
      * @ORM\Id
@@ -44,8 +47,15 @@ class User extends BaseUser
      */
     protected $messages;
     /**
+     * @ORM\OneToMany(targetEntity="Handshake", mappedBy="user")
+     */
+    protected $handshakes;
+    /**
+     * @ORM\OneToMany(targetEntity="Handshake", mappedBy="friend")
+     */
+    protected $friendsWithMe;
+    /**
      * Get id
-     *
      * @return integer $id
      */
     public function getId()
@@ -59,6 +69,30 @@ class User extends BaseUser
     public function setWhispers(Whisper $whisper) {
         $this->whispers[] = $whisper;
     }
+    public function getMessages() {
+        return $this->messages;
+    }
+
+    public function setMessages(Message $message) {
+        $this->messages = $messages;
+    }
+
+    public function getHandshakes() {
+        return $this->handshakes;
+    }
+
+    public function setHandshakes(Handshake $handshake) {
+        $this->handshakes[] = $handshake;
+    }
+
+    public function getFriendsWithMe() {
+        return $this->friendsWithMe;
+    }
+
+    public function setFriendsWithMe(Handshake $friend) {
+        $this->friendsWithMe[] = $friend;
+    }
+
 
 
 }

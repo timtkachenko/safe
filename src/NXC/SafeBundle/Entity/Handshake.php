@@ -6,29 +6,35 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Handshake
+ *
+ * @ORM\Table(name="handshake")
+ * @ORM\Entity(repositoryClass="NXC\SafeBundle\Entity\HandshakeRepository")
  */
 class Handshake
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="handshakes", fetch="EAGER")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="friendsWithMe", fetch="EAGER")
+     * @ORM\JoinColumn(name="friend_user_id", referencedColumnName="id")
+     */
+    protected $friend;
 
     /**
-     * @var string
+     *  @ORM\Column(type="string", length=32, unique=true, nullable=false)
      */
-    private $firstId;
-
-    /**
-     * @var string
-     */
-    private $secondId;
-
-    /**
-     * @var string
-     */
-    private $value;
-
+    protected $power;
 
     /**
      * Get id
@@ -39,43 +45,30 @@ class Handshake
     {
         return $this->id;
     }
-
-    public function getFirstId() {
-        return $this->firstId;
+    public function getUser() {
+        return $this->user;
     }
 
-    public function setFirstId($firstId) {
-        $this->firstId = $firstId;
+    public function setUser(User $user) {
+        $this->user = $user;
     }
 
-    public function getSecondId() {
-        return $this->secondId;
+    public function getFriend() {
+        return $this->friend;
     }
 
-    public function setSecondId($secondId) {
-        $this->secondId = $secondId;
+    public function setFriend(User $friend) {
+        $this->friend = $friend;
     }
 
-    /**
-     * Set value
-     *
-     * @param string $value
-     * @return Handshake
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
+    public function getPower() {
+        return $this->power;
     }
 
-    /**
-     * Get value
-     *
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
+    public function setPower($power) {
+        $this->power = $power;
     }
+
+
+
 }

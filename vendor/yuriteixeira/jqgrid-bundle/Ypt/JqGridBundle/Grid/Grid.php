@@ -126,6 +126,7 @@ class Grid
      */
     protected $eventsNamespace;
 
+    public $tplGridName;
 
 
     /**
@@ -156,8 +157,15 @@ class Grid
 
 
      // --- Common getters and setters ---
+     public function getTplGridName() {
+         return $this->tplGridName;
+     }
 
-    /**
+     public function setTplGridName($tplGridName) {
+         $this->tplGridName = $tplGridName;
+     }
+
+         /**
      * @param string $format A Jquery Datepicker Plugin date format
      *
      * @see http://jqueryui.com/demos/datepicker/
@@ -611,8 +619,11 @@ class Grid
      *
      * @return array | \Symfony\Component\HttpFoundation\Response
      */
-    public function render()
+    public function render($tplGridName = null)
     {
+        if(!empty($tplGridName)){
+            $this->setTplGridName ($tplGridName);
+        }
         if ($this->isOnlyData()) {
 
             $data = $this->getData();
@@ -625,7 +636,12 @@ class Grid
             return $response;
 
         } else {
-
+            if(!empty($this->tplGridName)){
+                $tplGridName = $this->tplGridName;
+                return array(
+                    "$tplGridName" => new GridView($this)
+                );
+            }
             return array(
                 'gridView' => new GridView($this)
             );

@@ -11,6 +11,13 @@ services:
         class: NXC\SafeBundle\Secured\Manager
         arguments:
             container: "@service_container"
+  ypt_jq_grid.twig.extension:
+    class: %ypt_jq_grid.twig_extension.class%
+    tags:
+      - { name: twig.extension }
+    arguments:
+        container: "@router"
+
 #    nxc_safe.example:
 #        class: %nxc_safe.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
@@ -20,7 +27,3 @@ services:
 #          tags:
 #            - { name: sonata.admin, manager_type: orm, group: safe, label: safe }
 #          arguments: [null, NXC\SafeBundle\Admin\Entity\Whisper, SonataAdminBundle:CRUD]
-#  ypt_jq_grid.twig.extension:
-#        class: NXC\SafeBundle\Twig\JqGridExtension
-#        tags:
-#          - { name: twig.extension }

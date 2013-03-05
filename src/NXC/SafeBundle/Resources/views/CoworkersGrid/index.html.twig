@@ -1,0 +1,124 @@
+{% extends 'NXCSafeBundle::layout.html.twig' %}
+{% block content %}
+<script type="text/javascript">
+var userPublickey = "{{ userPublickey }}";
+var userAESKey = '{{ userAESKey }}';
+var salt = "{{ salt }}";
+var guest = "";
+//var decryptedPem = CryptoJS.AES.decrypt(encryptedPem, skey);
+var rsaKey = RSA.getPublicKey(userPublickey);
+$(document).ready(function(){
+    $("#send").click(function(){
+        var msg = $("#bla").html();
+        enc=RSA.encrypt(msg, $key);
+        $.post(
+            'secured/login',
+            {encoded:enc},
+            function(re){
+                if(re && window.console){
+                    //console.log(re);
+                }
+            },
+            'json'
+        );
+    }).button();
+});
+ $(function() {
+    $("#editgrid").click(function(){
+        var grid = $("#gview_grid");
+        var x = grid.jqGrid("getGridParam",'url');
+        var url = "/safe/web/app_dev.php/usergrid";
+        var editurl = "/safe/web/app_dev.php/usergridedit";
+        jqgrid_reload(grid, {
+            url:url,
+            editurl:editurl,
+            page:1
+        });
+    }).button();
+    $( "#tabs" ).tabs({
+        activate: function( event, ui ) {
+            var options = $( this ).tabs( "option" );
+
+            var grid = (typeof gridSelector != "undefined")?$(gridSelector):$("#grid");
+            var url = "/safe/web/app_dev.php/viewgrid";
+            var editurl = "/safe/web/app_dev.php/viewgrid/edit";
+
+            if(options.active === 1){
+                var url = "/safe/web/app_dev.php/usergrid";
+                var editurl = "/safe/web/app_dev.php/usergridedit";
+            }else if(options.active === 2){
+                var url = "/safe/web/app_dev.php/usergrid";
+                var editurl = "/safe/web/app_dev.php/usergridedit";
+            }else if(options.active === 3){
+                var url = "/safe/web/app_dev.php/usergrid";
+                var editurl = "";
+            }
+            jqgrid_reload(grid, {
+                url:url,
+                editurl:editurl,
+                page:1
+            });
+
+            //console.log(jqgrid_clear_data(grid))
+        },
+        beforeActivate: function( event, ui ) {
+        },
+        beforeLoad: function( event, ui ) {
+            ui.panel.html(
+                        "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+                        "If this wouldn't be a demo." );
+        }
+    });
+});
+function decodeWhisper( cellvalue, options, cell ){
+    var txt = $('span', cell).text()
+    var decrypted = CryptoJS.AES.decrypt(txt, userAESKey);
+        txt = decrypted.toString(CryptoJS.enc.Utf8);
+        //console.log(txt);
+	return txt;
+}
+function encodeWhisper( cellvalue, options, rowObject){
+    	return '<span>'+cellvalue+'</span>';
+}
+jqgridDefaultEditOptions = $.extend({}, jqgridDefaultEditOptions, {
+    url:'/safe/web/app_dev.php/coworkers/edit',
+    editCaption: "Add to Collaborators?",
+    bSubmit: "Yes",
+    beforeShowForm : function(formid) {
+/*        $("#setFriends").dialog({
+            resizable: false,
+            height:140,
+            modal: true,
+            buttons: {
+                "Yes": function() {
+                    $( this ).dialog( "close" );
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+        $(formid).closest('div[id^="editmod"],div[id^="addmod"],div[id^="delmod"]').dialog( "close" );
+        return false;*/
+    },
+	beforeSubmit: function(postdata, formid) {
+/*        var whisper = postdata.grid_whisper;
+        var password = userAESKey;
+        //console.log(CryptoJS.MD5(userAESKey).toString());
+        password=RSA.encrypt(password, rsaKey);
+        var encrypted = CryptoJS.AES.encrypt(whisper, userAESKey);
+        postdata.grid_whisper = encrypted.toString();
+*/
+        var success = true;
+        var message = false;
+        return[success,message];
+        }
+});
+</script>
+<a href="/safe/web/app_dev.php/safe">Safe</a>
+<div id="theTab">
+    {{jqgrid(gridView)}}
+</div>
+<div id="setFriends" class="hidden">Add to Collaborators?</div>
+<div id="editgrid">edit</div>
+{% endblock content %}

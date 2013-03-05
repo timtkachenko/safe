@@ -24,32 +24,6 @@ $(document).ready(function(){
     }).button();
 });
  $(function() {
-    var createNewGrid = function(grid) {
-        var url = "/safe/web/app_dev.php/usergrid";
-        var editurl = "/safe/web/app_dev.php/usergridedit";
-        $(grid).jqGrid({
-            url:url,
-            editurl:editurl,
-            datatype: "json",
-            //data: mydata,
-            colNames:['id', 'fid', 'power'],
-            colModel:[
-                {name:'id',index:'h.id', width:65, sorttype: "int", editable:false,editoptions:{readonly:true,size:10}},
-                //{name:'name',index:'name', width:90,editable:true,editoptions:{size:25}},
-                {name:'fid',index:'fid', width:90,editable:true,editoptions:{size:25}},
-                {name:'power',index:'power', width:100, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"20"}}
-            ],
-            rowNum:10,
-            rowList:[10,20,30],
-            pager: grid+'_pager',
-            sortname: 'h.id',
-            viewrecords: true,
-            altRows:true,
-            sortorder: "desc",
-            caption:"Large Grid",
-            height: "100%"
-        });
-    };
     $("#editgrid").click(function(){
         var grid = $("#gview_grid");
         var x = grid.jqGrid("getGridParam",'url');
@@ -69,26 +43,21 @@ $(document).ready(function(){
             var url = "/safe/web/app_dev.php/safe";
             var editurl = "/safe/web/app_dev.php/safe/edit";
 
-            if(options.active === 0){
-              jqgrid_reload(grid, {
-                    url:url,
-                    editurl:editurl,
-                    page:1
-                });
-            }
             if(options.active === 1){
-                //$("#list").jqGrid('GridDestroy');
-                //$(grid).jqGrid('GridUnload');
-                createNewGrid("#collaborators");
                 var url = "/safe/web/app_dev.php/usergrid";
                 var editurl = "/safe/web/app_dev.php/usergridedit";
             }else if(options.active === 2){
-
+                var url = "/safe/web/app_dev.php/usergrid";
+                var editurl = "/safe/web/app_dev.php/usergridedit";
             }else if(options.active === 3){
                 var url = "/safe/web/app_dev.php/usergrid";
                 var editurl = "";
             }
-
+            jqgrid_reload(grid, {
+                url:url,
+                editurl:editurl,
+                page:1
+            });
 
             //console.log(jqgrid_clear_data(grid))
         },
@@ -130,17 +99,14 @@ jqgridDefaultEditOptions = $.extend({}, jqgridDefaultEditOptions, {
 <div id="tabs">
     <ul>
         <li><a href="#theTab">My DATA</a></li>
-        <li><a href="#theCollaborators">Collaborators</a></li>
+        <li><a href="#theTab">Collaborators</a></li>
         <li><a href="{{ path('_messages') }}">Shared&AMP;Secure</a></li>
     </ul>
     <div id="theTab">
         {{jqgrid(gridView)}}
     </div>
-    <div id="theCollaborators">
-        <div id="collaborators_wrapper">
-            <table class="ypt_jqgrid" id="collaborators"></table>
-            <div id="collaborators_pager"></div>
-        </div>
+    <div id="theTabShared">
+       theTabShared
     </div>
 </div>
 
@@ -190,7 +156,51 @@ jqgridDefaultEditOptions = $.extend({}, jqgridDefaultEditOptions, {
                     height: "100%"
                 });
             };
-
+            var createLargeGrid = function() {
+                var mydata = [
+                    {id:"1",invdate:"2007-10-01",name:"test",note:"note",amount:"200.00",tax:"10.00",total:"210.00"},
+                    {id:"2",invdate:"2007-10-02",name:"test2",note:"note2",amount:"300.00",tax:"20.00",total:"320.00"},
+                    {id:"3",invdate:"2007-09-01",name:"test3",note:"note3",amount:"400.00",tax:"30.00",total:"430.00"},
+                    {id:"4",invdate:"2007-10-04",name:"test4",note:"note4",amount:"200.00",tax:"10.00",total:"210.00"},
+                    {id:"5",invdate:"2007-10-05",name:"test5",note:"note5",amount:"300.00",tax:"20.00",total:"320.00"},
+                    {id:"6",invdate:"2007-09-06",name:"test6",note:"note6",amount:"400.00",tax:"30.00",total:"430.00"},
+                    {id:"7",invdate:"2007-10-04",name:"test7",note:"note7",amount:"200.00",tax:"10.00",total:"210.00"},
+                    {id:"8",invdate:"2007-10-03",name:"test8",note:"note8",amount:"300.00",tax:"20.00",total:"320.00"},
+                    {id:"9",invdate:"2007-09-01",name:"test9",note:"note9",amount:"400.00",tax:"30.00",total:"430.00"},
+                    {id:"10",invdate:"2007-09-08",name:"test10",note:"note10",amount:"500.00",tax:"30.00",total:"530.00"},
+                    {id:"11",invdate:"2007-09-08",name:"test11",note:"note11",amount:"500.00",tax:"30.00",total:"530.00"},
+                    {id:"12",invdate:"2007-09-10",name:"test11",note:"note12",amount:"500.00",tax:"30.00",total:"530.00"}
+                ];
+                $("#list").jqGrid({
+                    datatype: "local",
+                    data: mydata,
+                    colNames:['Inv No no NO','Date', 'Client', 'Amount in EUR','Tax','Total','Notes'],
+                    colModel:[
+                        {name:'id',index:'id', width:65, sorttype: "int", editable:false,editoptions:{readonly:true,size:10}},
+                        {name:'invdate',index:'invdate', width:120,editable:true,align:'center',
+                         sorttype:'date', formatter:'date', datefmt:'d/m/Y',
+                         editoptions:{size:12,dataInit : function (elem) {
+                             setTimeout(function(){
+                                 $(elem).datepicker({ showOn: 'button' });
+                             },100);
+                         } }},
+                        {name:'name',index:'name', width:90,editable:true,editoptions:{size:25}},
+                        {name:'amount',index:'amount', width:70, align:"right",editable:true,editoptions:{size:10}},
+                        {name:'tax',index:'tax', width:60, align:"right",editable:true,editoptions:{size:10}},
+                        {name:'total',index:'total', width:60,align:"right",editable:true,editoptions:{size:10}},
+                        {name:'note',index:'note', width:100, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"20"}}
+                    ],
+                    rowNum:10,
+                    rowList:[10,20,30],
+                    pager: '#pager',
+                    sortname: 'id',
+                    viewrecords: true,
+                    altRows:true,
+                    sortorder: "desc",
+                    caption:"Large Grid",
+                    height: "100%"
+                });
+            };
 
             createSmallGrid();
 
